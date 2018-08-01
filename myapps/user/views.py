@@ -35,6 +35,12 @@ def regist(request):
                 user.photo = mvFilePath
                 user.save()  # 更新目录
 
+
+            # 将当前注册成功的用户名和id写入到session中
+            request.session['login_user'] = json.dumps({'id': user.id,
+                                                         'name': user.username,
+                                                         'photo': user.photo})
+
             return redirect('/')  # 重定向到主页
         else:
             errors_json = json.loads(form.errors.as_json())

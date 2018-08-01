@@ -140,3 +140,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/uploads')
 
 # 配置访问媒体文件的URL
 MEDIA_URL = '/static/uploads/'
+
+
+# ----REDIS Cache缓存-----
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1/3',  # 'redis://:password@127.0.0.1/3'
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
+    }
+}
+
+# ---end Cache---
+
+# 配置Session
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 使用缓存

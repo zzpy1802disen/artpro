@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.contrib import admin
+import json
+
 from django.shortcuts import render
 
 import xadmin as admin
@@ -21,7 +23,10 @@ from django.conf.urls import url, include
 
 # 主页请求处理的view函数
 def toIndex(request):
-    return render(request, 'index.html')
+    lu = request.session.get('login_user')
+    if lu:
+        login_user = json.loads(lu)
+    return render(request, 'index.html', locals())
 
 
 urlpatterns = [
