@@ -14,12 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.contrib import admin
+from django.shortcuts import render
+
 import xadmin as admin
 from django.conf.urls import url, include
+
+# 主页请求处理的view函数
+def toIndex(request):
+    return render(request, 'index.html')
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('user.urls')),  # 引入user模块的urls.py
+    url(r'^', toIndex),  # 引入user模块的urls.py
 
 ]

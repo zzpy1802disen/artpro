@@ -32,7 +32,8 @@ class Art(models.Model):
                            imagePath='art/u_images/',
                            filePath='art/u_files/',
                            toolbars='full',
-                           blank=True)
+                           blank=True,
+                           null=True)
     author = models.CharField(max_length=50,
                               verbose_name='作者')
 
