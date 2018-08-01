@@ -52,7 +52,7 @@
             <label class="col-xs-3 col-xs-push-1">头像</label>
             <div class="col-xs-7">
                 <img id="preImg"
-                     src="/static/users/default.jpg"
+                     src="{{ form.photo.value|default:'/static/users/default.jpg' }}"
                      width="100px" height="120px"
                      onclick="selectImage.click()">
             </div>

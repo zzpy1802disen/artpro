@@ -26,10 +26,14 @@ def regist(request):
         # 读取注册的用户信息
         form = UserProfileForm(request.POST)
         if form.is_valid():
-            form.save()  # 验证没有任何问题，则写入数据库
+            user = form.save()  # 验证没有任何问题，则写入数据库
 
             # 清除上传图片的临时目录
-            mvImageFromTmp(request.POST.get('photo'))
+            photo = request.POST.get('photo')
+            if photo:
+                mvFilePath = mvImageFromTmp(photo)
+                user.photo = mvFilePath
+                user.save()  # 更新目录
 
             return redirect('/')  # 重定向到主页
         else:
