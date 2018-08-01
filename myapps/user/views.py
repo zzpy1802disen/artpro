@@ -13,6 +13,7 @@ from MArtPro import settings
 from user.forms import UserProfileForm
 from user.models import UserProfile
 
+from utils import mvImageFromTmp
 
 def login(request):
     return render(request, 'user/login.html')
@@ -26,6 +27,10 @@ def regist(request):
         form = UserProfileForm(request.POST)
         if form.is_valid():
             form.save()  # 验证没有任何问题，则写入数据库
+
+            # 清除上传图片的临时目录
+            mvImageFromTmp(request.POST.get('photo'))
+
             return redirect('/')  # 重定向到主页
         else:
             errors_json = json.loads(form.errors.as_json())

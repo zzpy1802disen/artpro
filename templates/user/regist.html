@@ -10,7 +10,7 @@
 
         {% csrf_token %}
 
-        <input type="hidden" name="photo" value="">
+        <input type="hidden" name="photo" value="{{ form.photo.value }}">
 
         <div class="form-group">
             <label class="col-xs-3 col-xs-push-1">用户名</label>
