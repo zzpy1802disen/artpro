@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+    用户注册页面
+{% endblock %}
+{% block content %}
+
+    <form class="form form-horizontal col-xs-offset-2"
+          method="post"
+          action="/user/regist/">
+
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">用户名</label>
+            <div class="col-xs-7">
+                <input class="form-control" name="username">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">口令</label>
+            <div class="col-xs-7">
+                <input class="form-control" name="password" type="password">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">重复口令</label>
+            <div class="col-xs-7">
+                <input class="form-control" name="password2" type="password">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">邮箱</label>
+            <div class="col-xs-7">
+                <input class="form-control" name="email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">电话</label>
+            <div class="col-xs-7">
+                <input class="form-control" name="phone">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-xs-7 col-xs-offset-3">
+                <button class="btn btn-primary">注册</button>
+                <a class="btn btn-link" href="/user/login/">已注册用户，去登录</a>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
