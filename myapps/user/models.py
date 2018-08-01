@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.db import models
 
 # Create your models here.
@@ -11,6 +12,13 @@ class UserProfile(models.Model):
 
     phone = models.CharField(max_length=12,
                              verbose_name='手机号')
+
+    # 对密码进行加密
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.password.startswith('pbkdf2_sha256'):
+            self.password = make_password(self.password)
+        super().save()
 
     class Meta:
         db_table = 't_user'
