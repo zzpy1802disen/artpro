@@ -10,6 +10,8 @@
 
         {% csrf_token %}
 
+        <input type="hidden" name="photo" value="">
+
         <div class="form-group">
             <label class="col-xs-3 col-xs-push-1">用户名</label>
             <div class="col-xs-7">
@@ -42,7 +44,17 @@
         <div class="form-group">
             <label class="col-xs-3 col-xs-push-1">电话</label>
             <div class="col-xs-7">
-                <input class="form-control" name="phone"  value="{{ form.phone.value }}" >
+                <input class="form-control" name="phone" value="{{ form.phone.value }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-push-1">头像</label>
+            <div class="col-xs-7">
+                <img id="preImg"
+                     src="/static/users/default.jpg"
+                     width="100px" height="120px"
+                     onclick="selectImage.click()">
             </div>
         </div>
 
@@ -66,6 +78,46 @@
 
     </form>
 
+    <input type="file"
+           id="selectImage"
+           style="display: none;"
+           onchange="uploadImage(this.files[0])">
 
 
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function uploadImage(imgFile) {
+        alert("正在上传图片： "+imgFile.name);
+        var url = '/user/upload/';  //上传图片的路径(接口)
+        var fd = new FormData();  // 将上传的文件封装到FormData中
+        fd.append('u_img', imgFile);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);  //打开接口（连接）
+
+        // 设置请求监听(成功，或失败)
+        xhr.onload = function (ev) {
+            // 判断请求是否成功
+            if(xhr.status == 200 && xhr.readyState==4){
+                alert(xhr.responseText);  //打印响应的文本数据
+                // 将响应的json文本转成json对象
+                data = JSON.parse(xhr.responseText);
+
+                // 显示上传的图片
+                $('#preImg').attr('src', data.path);
+
+                //将上传图片的路径写入到注册表单中
+                $('input[name="photo"]').val(data.path);
+            }
+        }
+
+        // 发送数据
+        xhr.send(fd);
+
+
+    }
+</script>
 {% endblock %}

@@ -13,6 +13,10 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=12,
                              verbose_name='手机号')
 
+    photo = models.CharField(max_length=100,
+                             null=True,
+                             blank=True)
+
     # 对密码进行加密
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

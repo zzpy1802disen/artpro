@@ -15,11 +15,7 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['username',
-                  'password',
-                  'password2',
-                  'email',
-                  'phone']
+        fields = '__all__'
         error_messages = {
             'username':
                 {'required': '用户名不能为空'},
