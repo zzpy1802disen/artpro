@@ -47,13 +47,13 @@ def listRankTop(top):
 
 def advance(request, artId):
     # 抢读
-    login_user = request.session.get('login_user')
-
+    login_user = json.loads(request.session.get('login_user'))
+    print(login_user)
     if not login_user:
         return JsonResponse({'status': 101,
                              'msg': '亲，请先登录，再抢读,谢谢！'})
 
-    user_id = json.loads(login_user).id
+    user_id =login_user.get('id')
     # 任务延迟执行
     tasks.advanceArt.delay(artId, user_id)
     return JsonResponse({'status': 201,
@@ -67,13 +67,14 @@ def queryAdvance(request, artId):
     if not login_user:
         return JsonResponse({'status': 101,
                              'msg': '亲，请先登录，再查看抢读,谢谢！'})
-    user_id = json.loads(login_user).id
+
+    user_id = json.loads(login_user).get('id')
 
     artId = redis_cache.hget('AdvanceArt', user_id)
     if artId:
         art = Art.objects.get(id=artId.decode())
         return JsonResponse({'status': 200,
-                             'msg': '恭喜您，抢读％s 成功' %art.title})
+                             'msg': '恭喜您，抢读%s 成功'%art.title})
     else:
         if redis_cache.hlen('AdvanceArt')< 5:
             return JsonResponse({'status': 202,

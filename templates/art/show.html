@@ -23,7 +23,8 @@
                     </div>
                 </div>
                 <div style="padding: 10px" class="text-right">
-                    <a class="btn btn-success">抢读</a>
+                    <a id="advanceBtn" class="btn btn-success"
+                       onclick="advanceArt('{{ art.id }}')">抢读</a>
                     <a class="btn btn-danger">购买</a>
                     <a class="btn btn-primary">加入书架</a>
                 </div>
@@ -46,4 +47,8 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block js %}
+ <script src="/static/art/js/art.js"></script>
 {% endblock %}
