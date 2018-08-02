@@ -16,13 +16,14 @@ Including another URLconf
 # from django.contrib import admin
 import json
 
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 import xadmin as admin
 from django.conf.urls import url, include
 
 # 主页请求处理的view函数
-from art.models import Art
+from art.models import Art, Category
 
 
 def toIndex(request):
@@ -30,8 +31,22 @@ def toIndex(request):
     if lu:
         login_user = json.loads(lu)
 
+    # 加载所有的分类
+    cates = Category.objects.all()
+
+    # 获取当前的分类
+    cateId = request.GET.get('cate')
+    cateId = int(cateId) if cateId else 0  # 0表示所有分类
+
     # 加载所有文章
-    arts = Art.objects.all()
+    arts = Art.objects.all() if cateId == 0 else Art.objects.filter(category_id=cateId)
+
+    # 分页显示文章（每页显示10个文章）
+    page = request.GET.get('page')
+    page = int(page) if page else 1  # 检验请求参数中是否有page参数
+
+    paginator = Paginator(arts, 10)
+    pager = paginator.page(page)
 
     return render(request, 'index.html', locals())
 

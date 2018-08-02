@@ -10,13 +10,14 @@
     <div class="row">
         <span class="col-xs-2" style="font-size: 20px">分类标签:</span>
         <ul class="col-xs-8">
-            <li><span class="btn btn-danger">所有分类</span></li>
-            <li><span class="btn btn-info">都市小说</span></li>
-            <li><span class="btn btn-info">历史小说</span></li>
+            <li><a href="/" class="btn {% if cateId == 0 %}btn-danger  {% else %} btn-info {% endif %}">所有分类</a></li>
+            {% for cate in cates %}
+                <li><a href="/?cate={{ cate.id }}" class="btn {% if cateId == cate.id %} btn-danger  {% else %} btn-info {% endif %}">{{ cate.name }}</a></li>
+            {% endfor %}
         </ul>
     </div>
     <ul class="row">
-        {% for art in arts %}
+        {% for art in pager.object_list %}
             <li>
                 <dl>
                     <dt>
@@ -31,5 +32,34 @@
             </li>
         {% endfor %}
     </ul>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if pager.has_previous %}
+                <li>
+                    <a href="/?page={{ pager.previous_page_number }}&cate={{ cateId }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for page in paginator.page_range %}
+                {% if forloop.counter == pager.number %}
+                    <li class="active">
+                    {% else %}
+                     <li>
+                {% endif %}
+
+                <a href="/?page={{ page }}&cate={{ cateId }}">{{ page }}</a></li>
+            {% endfor %}
+
+            {% if pager.has_next %}
+                <li>
+                    <a href="/?page={{ pager.next_page_number }}&cate={{ cateId }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 
 {% endblock %}
