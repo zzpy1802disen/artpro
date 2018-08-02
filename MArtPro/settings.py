@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'user',
     'xadmin',
     'crispy_forms',
-    'DjangoUeditor'
+    'DjangoUeditor',
+    'djcelery',  # 引入Django-Celery app
 ]
 
 MIDDLEWARE = [
@@ -165,3 +166,30 @@ REDIS_CACHE = {
     'db': 3,
     'port': 6379
 }
+
+
+# -----配置 Django-Celery-----
+import djcelery
+from celery.schedules import crontab, timedelta
+
+djcelery.setup_loader()  # 加载djcelery应用
+
+# 配置消息中件间
+BROKER_URL = 'redis://127.0.0.1:6379/5'
+CELERY_IMPORTS = ('art.tasks',)  # 初始导入 celery任务位置
+CELERY_TIMEZONE = 'Asia/Shanghai'  # 时区
+
+# 配置任务定时队列存储的位置
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+
+# 配置任务任务
+CELERYBEAT_SCHEDULE = {
+    u'定时发邮件': {
+        'task': 'art.tasks.sendEmailLog',
+        'schedule': timedelta(seconds=10),
+        'args': ()
+    }
+}
+
+# ----end Django-Celery------

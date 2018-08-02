@@ -100,5 +100,6 @@ def upload(request):
 
 def logout(request):
     # 删除session（字典）中的login_user
-    del request.session['login_user']
+    # del request.session['login_user']
+    request.session.flush()
     return redirect('/')
