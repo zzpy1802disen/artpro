@@ -157,3 +157,11 @@ CACHES = {
 
 # 配置Session
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 使用缓存
+
+
+# 配置REDIDS的连接
+REDIS_CACHE = {
+    'host': '127.0.0.1',
+    'db': 3,
+    'port': 6379
+}

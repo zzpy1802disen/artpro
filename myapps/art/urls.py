@@ -7,5 +7,4 @@ app_name = 'art'
 urlpatterns = [
     url(r'^show/(\d+?)/$', views.show),
 
-
 ]

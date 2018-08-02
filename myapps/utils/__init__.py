@@ -5,8 +5,14 @@ import logging
 import os
 import re
 
+from redis import Redis
+
 from MArtPro import settings
 
+# 声明redis缓存对象
+from MArtPro.settings import REDIS_CACHE
+
+redis_cache = Redis(**REDIS_CACHE)
 
 def mvImage(filePath, dstDir):
     '''

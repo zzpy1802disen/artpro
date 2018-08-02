@@ -20,10 +20,23 @@
     padding: 10px;
 }
 
+/*富文本中图片样式*/
 p img{
     width: 120px;
     height: 100px;
 }
+
+/*富文本代码区的样式*/
 pre {
     margin: 5px;
 }
+#rank_top {
+    padding: 5px;
+}
+
+ul,li{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
