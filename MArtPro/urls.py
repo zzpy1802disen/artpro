@@ -55,6 +55,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('user.urls')),  # 引入user模块的urls.py
+    url(r'^art/', include('art.urls')),  # 引入art模块的urls.py
     url(r'^', toIndex),  # 引入user模块的urls.py
 
 ]
