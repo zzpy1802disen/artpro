@@ -53,6 +53,12 @@ class Art(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def shortTitle(self):
+        if len(self.title) > 8:
+            return self.title[0:8]+".."
+        return self.title
+    
     class Meta:
         db_table = 't_art'
         verbose_name = '文章表'

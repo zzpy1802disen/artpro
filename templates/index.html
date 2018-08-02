@@ -2,8 +2,34 @@
 {% block title %}
     主页
 {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/index/css/index.css">
+{% endblock %}
 {% block content %}
 
-   <h1>我是主页</h1>
+    <div class="row">
+        <span class="col-xs-2" style="font-size: 20px">分类标签:</span>
+        <ul class="col-xs-8">
+            <li><span class="btn btn-danger">所有分类</span></li>
+            <li><span class="btn btn-info">都市小说</span></li>
+            <li><span class="btn btn-info">历史小说</span></li>
+        </ul>
+    </div>
+    <ul class="row">
+        {% for art in arts %}
+            <li>
+                <dl>
+                    <dt>
+                        <img src="/static/uploads/{{ art.cover|default:'art/images/0.jpg' }}"
+                             width="120"
+                             height="140">
+                    </dt>
+                    <dd>{{ art.shortTitle }}</dd>
+                    <dd>作者：{{ art.author }}</dd>
+                    <dd><a class="btn btn-primary">阅读</a></dd>
+                </dl>
+            </li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

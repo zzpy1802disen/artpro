@@ -1,0 +1,21 @@
+ul, li {
+    list-style: none;
+}
+
+li{
+    float: left;
+    margin-left: 5px;
+}
+
+li dt img{
+    border-radius: 5px;
+}
+li dt img:hover{
+    box-shadow: 2px 2px 2px lightblue;
+    transform: scale3d(1.02,1.02,1.02);
+    transition: transform ease-in-out 0.5s;
+}
+
+li dd{
+    text-end-overflow: hidden;
+}

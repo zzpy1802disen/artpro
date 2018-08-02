@@ -22,10 +22,17 @@ import xadmin as admin
 from django.conf.urls import url, include
 
 # 主页请求处理的view函数
+from art.models import Art
+
+
 def toIndex(request):
     lu = request.session.get('login_user')
     if lu:
         login_user = json.loads(lu)
+
+    # 加载所有文章
+    arts = Art.objects.all()
+
     return render(request, 'index.html', locals())
 
 
