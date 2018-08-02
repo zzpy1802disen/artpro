@@ -3,6 +3,7 @@
 # '''
 import logging
 import os
+import re
 
 from MArtPro import settings
 
@@ -36,3 +37,11 @@ def mvImageFromTmp(filePath):
     srcPath = os.path.join(settings.BASE_DIR, filePath[1:])
 
     return os.path.join('/static/users', mvImage(srcPath, dstDir))
+
+def check_sql_inject(str):
+    '''
+    验证字符串是否包含特殊字符，如 =,'
+    :param str:
+    :return:  返回True,则表示安全，False存在SQL注入的非法字符
+    '''
+    return not re.findall(r'([=\']+)', str)
