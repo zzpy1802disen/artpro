@@ -193,3 +193,36 @@ CELERYBEAT_SCHEDULE = {
 }
 
 # ----end Django-Celery------
+
+
+# ---配置日志---
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters':{  # 日志格式器
+        'simple': {
+            'format': '[%(asctime)s]->%(module)s/%(funcName)s:%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        }
+    },
+    'handlers': {  # 日志处理器
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'logFile': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'simple',
+            'filename': 'mart.log'
+        }
+    },
+    'loggers': {  # 日志记录器
+        'info': {
+            'handlers': ('console', 'logFile'),
+            'level': 'INFO',
+            'propagate': False
+        }
+    }
+}

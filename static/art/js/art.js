@@ -4,6 +4,9 @@ function advanceArt(artId) {
         alert(data.msg);
         if (data.status == 201) {
             queryAdvanceArt(artId);
+        }else if (data.status == 101){
+            // 打开登录页面
+            window.open('/user/login/', target='_self');
         }
     })
 }
