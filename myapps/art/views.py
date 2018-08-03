@@ -17,7 +17,8 @@ from utils import redis_cache
 @cache_page(10)
 def show(request, artId):
     # 读取当前用户信息
-    login_user = json.loads(request.session.get('login_user'))
+    if request.session.get('login_user'):
+        login_user = json.loads(request.session.get('login_user'))
 
     # 查看指定的文章
     art = Art.objects.get(id=artId)
@@ -47,13 +48,17 @@ def listRankTop(top):
 
 def advance(request, artId):
     # 抢读
-    login_user = json.loads(request.session.get('login_user'))
-    print(login_user)
+    login_user = request.session.get('login_user')
+
     if not login_user:
         return JsonResponse({'status': 101,
                              'msg': '亲，请先登录，再抢读,谢谢！'})
 
-    user_id =login_user.get('id')
+    # 判断当前用户是否已抢过
+    user_id =json.loads(login_user).get('id')
+    if redis_cache.hexists('AdvanceArt', user_id):
+        return JsonResponse({'status': 205,
+                             'msg': '亲，你只能抢一本'})
     # 任务延迟执行
     tasks.advanceArt.delay(artId, user_id)
     return JsonResponse({'status': 201,

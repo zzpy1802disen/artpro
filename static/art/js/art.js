@@ -8,7 +8,7 @@ function advanceArt(artId) {
     })
 }
 
-//正时查询抢读的结果
+//定时查询抢读的结果
 function queryAdvanceArt(artId) {
     tid = setInterval(function () {
         $.getJSON('/art/qAdvance/' + artId + "/", function (data) {
