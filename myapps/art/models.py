@@ -41,6 +41,7 @@ class Art(models.Model):
                                         auto_now_add=True)
 
     category = models.ForeignKey(Category,
+                                 related_name='arts',
                                  on_delete=models.CASCADE,
                                  verbose_name='分类')
 

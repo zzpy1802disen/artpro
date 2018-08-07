@@ -25,6 +25,7 @@ from django.conf.urls import url, include
 # 主页请求处理的view函数
 from art.models import Art, Category
 
+from api import api_router
 
 def toIndex(request):
     lu = request.session.get('login_user')
@@ -52,6 +53,9 @@ def toIndex(request):
 
 
 urlpatterns = [
+    # 加下rest_framework授权管理的url
+    url(r'^api/', include(api_router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('user.urls')),  # 引入user模块的urls.py

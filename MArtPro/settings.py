@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'myapps'))
 sys.path.insert(1, os.path.join(BASE_DIR, 'extapps'))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -31,7 +30,6 @@ SECRET_KEY = 'rhi67s4im$%5v%%oj=6z31l+qshpc&jcsi_+kgk1&)v+ib_p0$'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -48,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'DjangoUeditor',
     'djcelery',  # 引入Django-Celery app
+    'rest_framework',  # 引入 djangorestframework
 ]
 
 MIDDLEWARE = [
@@ -81,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MArtPro.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -91,7 +89,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -111,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -124,7 +120,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -142,7 +137,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/uploads')
 # 配置访问媒体文件的URL
 MEDIA_URL = '/static/uploads/'
 
-
 # ----REDIS Cache缓存-----
 CACHES = {
     'default': {
@@ -159,14 +153,12 @@ CACHES = {
 # 配置Session
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 使用缓存
 
-
 # 配置REDIDS的连接
 REDIS_CACHE = {
     'host': '127.0.0.1',
     'db': 3,
     'port': 6379
 }
-
 
 # -----配置 Django-Celery-----
 import djcelery
@@ -181,7 +173,6 @@ CELERY_TIMEZONE = 'Asia/Shanghai'  # 时区
 
 # 配置任务定时队列存储的位置
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-
 
 # 配置任务任务
 CELERYBEAT_SCHEDULE = {
@@ -199,7 +190,7 @@ CELERYBEAT_SCHEDULE = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters':{  # 日志格式器
+    'formatters': {  # 日志格式器
         'simple': {
             'format': '[%(asctime)s]->%(module)s/%(funcName)s:%(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S'
@@ -225,4 +216,11 @@ LOGGING = {
             'propagate': False
         }
     }
+}
+
+# 设置 Django_REST_Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
